@@ -1,4 +1,4 @@
-# 🏠 Zameed Real Estate Platform
+# 🏠 Hils Real Estate Marketing Platform
 
 > Premium real estate marketing platform for Pakistan market with JWT auth, property listings, Stripe payments, and admin/customer dashboards.
 
