@@ -1,4 +1,4 @@
-# ============================================================================
+﻿# ============================================================================
 # Python / Backend
 # ============================================================================
 __pycache__/
@@ -18,6 +18,7 @@ env/
 .coverage
 htmlcov/
 .tox/
+*.log
 
 # ============================================================================
 # Node / Frontend
@@ -30,6 +31,9 @@ build/
 .cache/
 coverage/
 *.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # ============================================================================
 # Environment files (NEVER commit real secrets)
@@ -40,12 +44,14 @@ coverage/
 !.env.example
 
 # ============================================================================
-# Local-only artefacts
+# Local-only artefacts (memory folder)
 # ============================================================================
 memory/
 !memory/README.md
 !memory/env-examples.md
 !memory/.gitkeep
+memory/*.json
+memory/test-credentials.md
 
 # ============================================================================
 # Editor / OS
@@ -61,75 +67,19 @@ ehthumbs.db
 Desktop.ini
 
 # ============================================================================
-# Logs / runtime
-# ============================================================================
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pids/
-*.pid
-*.seed
-
-# ============================================================================
 # Build artefacts
 # ============================================================================
 *.tgz
 *.zip
 *.tar.gz
+*.pid
+*.seed
 
-# === PYTHON ===
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-.pytest_cache/
-.mypy_cache/
-.coverage
-htmlcov/
-.tox/
-.nox/
-.hypothesis/
-venv/
-.venv/
-env/
-ENV/
-*.log
-
-# === NODE/REACT ===
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-dist/
-build/
-.out/
-.next/
-.nuxt/
-*.local
-*.log
-
-# === ENV/SECRETS ===
-.env
-.env.local
-.env.*.local
+# ============================================================================
+# Sensitive files (explicit)
+# ============================================================================
+backend/cookies.txt
+backend/*.json
 *.pem
 *.key
 *.crt
@@ -137,25 +87,9 @@ secrets/
 credentials.json
 service-account.json
 
-# === IDE/OS ===
-.idea/
-.vscode/
-*.swp
-*.swo
-.DS_Store
-Thumbs.db
-
-# === MEMORY/LOCAL DATA (gitignored except README) ===
-memory/*.json
-memory/*.md
-!memory/README.md
-!memory/env-examples.md
-
-# === CURSOR AI (optional) ===
-.cursor/
-!.cursor/rules/dependencies.mdc
-
-# === TESTING ===
+# ============================================================================
+# Testing
+# ============================================================================
 coverage/
 .jest/
 cypress/videos/
@@ -163,9 +97,16 @@ cypress/screenshots/
 playwright-report/
 test-results/
 
-# === DEPLOYMENT ===
+# ============================================================================
+# Deployment
+# ============================================================================
 .vercel/
 .netlify/
 fly.toml
-render.yamlbackend/cookies.txt
-backend/*.json
+render.yaml
+
+# ============================================================================
+# Cursor AI (optional)
+# ============================================================================
+.cursor/
+!.cursor/rules/dependencies.mdc
