@@ -1,0 +1,111 @@
+/* ============================================================================
+ * Hils Marketing — global stylesheet
+ *
+ * Order of imports matters:
+ *   1. @import (Google Fonts) — MUST come before @tailwind directives or
+ *      PostCSS will hoist the @tailwind rules above and the import breaks.
+ *   2. @tailwind base/components/utilities — Tailwind layers.
+ *   3. Theme tokens (CSS variables) — referenced by tailwind.config.js so
+ *      every utility class indirectly resolves to one of these values.
+ *   4. Reduced-motion baseline — site-wide opt-out, plus Framer Motion
+ *      individually gates per-animation via usePrefersReducedMotion().
+ * ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----------------------------------------------------------------------------
+ * Theme tokens
+ *
+ * Values are stored as space-separated RGB triplets so Tailwind's
+ * `<alpha-value>` syntax works:
+ *
+ *     text-foreground/60   ->  color: rgb(255 255 255 / 0.6)
+ *
+ * To add a light theme later: define a `:root[data-theme="light"]` block
+ * with overridden values — Tailwind utilities pick it up with zero JS.
+ * ---------------------------------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --bg-obsidian: 5 5 5;             /* #050505 — base page background      */
+  --surface-raised: 20 20 20;       /* #141414 — cards, navbars            */
+  --surface-elevated: 26 26 26;     /* #1A1A1A — modals, popovers          */
+
+  /* Accent — champagne gold */
+  --accent-champagne: 212 175 55;   /* #D4AF37 — primary CTA bg, links     */
+  --accent-champagne-on: 5 5 5;     /* foreground for text on gold         */
+  --accent-champagne-soft: 212 175 55; /* mix via /opacity in classes      */
+
+  /* Text */
+  --text-high: 255 255 255;         /* #FFFFFF — primary copy              */
+  --text-muted: 161 161 170;        /* #A1A1AA — secondary copy            */
+
+  /* Hairlines / borders */
+  --border-subtle: 38 38 38;        /* #262626 — divider lines             */
+}
+
+/* ----------------------------------------------------------------------------
+ * Base layer — sensible defaults that don't need utility classes
+ * ---------------------------------------------------------------------------- */
+@layer base {
+  html {
+    background-color: rgb(var(--bg-obsidian));
+    color: rgb(var(--text-high));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply font-sans;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+    font-feature-settings: 'liga' 1, 'kern' 1;
+  }
+
+  /* Selection uses champagne to reinforce the brand. */
+  ::selection {
+    background-color: rgb(var(--accent-champagne) / 0.35);
+    color: rgb(var(--text-high));
+  }
+
+  /* Champagne focus ring — visible on both dark surfaces and gold CTAs. */
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent-champagne));
+    outline-offset: 2px;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+ * Reusable component classes (only when a utility string would repeat 3+ times)
+ * ---------------------------------------------------------------------------- */
+@layer components {
+  .eyebrow {
+    @apply text-xs uppercase tracking-eyebrow text-primary font-medium;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+ * Reduced motion — respect OS preference
+ *
+ * Two layers of defence:
+ *   (a) This media query disables CSS transitions/animations site-wide.
+ *   (b) Framer Motion components additionally call usePrefersReducedMotion()
+ *       to skip enter/exit animations they orchestrate themselves.
+ * ---------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
